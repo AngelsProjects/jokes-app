@@ -1,8 +1,9 @@
 import { Delete, Edit } from '@mui/icons-material'
 import { Box, IconButton, List, ListItem, ListItemText } from '@mui/material'
 import Link from 'next/link'
+import { FaEdit, FaTrash } from 'react-icons/fa'
 
-import { useDeleteJokeMutation } from '@/store/apiSlice'
+import { useDeleteJokeMutation } from '@/store/slices/apiSlice'
 
 export default function JokeList({ jokes }) {
   const [deleteJoke] = useDeleteJokeMutation()
@@ -15,11 +16,11 @@ export default function JokeList({ jokes }) {
           <Box>
             <Link href={`/jokes/edit/${joke.id}`} passHref>
               <IconButton>
-                <Edit />
+                <FaEdit />
               </IconButton>
             </Link>
             <IconButton onClick={() => deleteJoke(joke.id)}>
-              <Delete />
+              <FaTrash />
             </IconButton>
           </Box>
         </ListItem>

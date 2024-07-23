@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-import prisma from '../../../../lib/prisma'
-import redis from '../../../../lib/redis'
+import prisma from '@/lib/prisma'
+import redis from '@/lib/redis'
 
 export async function PATCH(req: NextRequest, { params }) {
   const { id } = params
@@ -23,6 +23,7 @@ export async function DELETE(req: NextRequest, { params }) {
   await prisma.joke.delete({
     where: { id: Number(id) }
   })
+
   await redis.del('jokes') // clear cache
 
   return NextResponse.status(204).end()

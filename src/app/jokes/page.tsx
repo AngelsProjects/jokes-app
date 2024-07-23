@@ -1,8 +1,8 @@
 import { Box, Button, Container, Typography } from '@mui/material'
 import Link from 'next/link'
 
-import { useGetJokesQuery } from '../../store/apiSlice'
-import JokeList from '../components/JokeList'
+import JokeList from '@/components/joke/JokeList'
+import { useGetJokesQuery } from '@/store/slices/apiSlice'
 
 export default function JokesPage() {
   const { data: jokes, error, isLoading } = useGetJokesQuery()

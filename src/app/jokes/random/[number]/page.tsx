@@ -1,7 +1,7 @@
 import { Box, Container, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 
-import { useGetRandomJokesQuery } from '@/store/apiSlice'
+import { useGetRandomJokesQuery } from '@/store/slices/apiSlice'
 
 export default function RandomJokesPage() {
   const router = useRouter()

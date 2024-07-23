@@ -1,19 +1,36 @@
 {
   "name": "my-jokes-app",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
+  "snyk": true,
+  "packageManager": "pnpm@9.6.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "author": {
+    "name": "Angel Arciniega",
+    "email": "angel@arciniega.io"
+  },
   "scripts": {
-    "dev": "next dev",
+    "dev": "docker-compose up -d && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write .",
     "test": "jest",
-    "test:e2e": "cypress open"
+    "test:e2e": "cypress open",
+    "postinstall": "prisma generate",
+    "snyk-protect": "snyk-protect",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "prepare": "pnpm snyk-protect"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
     "@hookform/resolvers": "^3.9.0",
+    "@mui/material": "^5.16.4",
     "@prisma/client": "^5.17.0",
     "@reduxjs/toolkit": "^2.2.6",
     "@tailwindcss/aspect-ratio": "^0.4.2",
@@ -36,6 +53,7 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^14.2.5",
+    "@snyk/protect": "^1.1292.1",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
@@ -58,13 +76,11 @@
     "prettier-plugin-tailwindcss": "^0.6.5",
     "renovate": "^37.440.4",
     "sass": "^1.77.8",
-    "snyk": "^1.1292.1",
     "sqlite3": "^5.1.7",
     "stylelint": "^16.7.0",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-use-logical-spec": "^5.0.1",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5",
-    "uploadthing": "^6.13.2"
+    "typescript": "^5"
   }
 }

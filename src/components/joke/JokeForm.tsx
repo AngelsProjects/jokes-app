@@ -12,12 +12,13 @@ const schema = yup.object().shape({
   punchline: yup.string().required()
 })
 
-export default function JokeForm({ jokeId }:{jokeId?: number }) => {
+export default function JokeForm({ jokeId }) {
   const { register, handleSubmit, reset, setValue } = useForm({
     resolver: yupResolver(schema)
   })
 
   const { data: jokes } = useGetJokesQuery()
+
   const [addJoke] = useAddJokeMutation()
   const [editJoke] = useEditJokeMutation()
 
