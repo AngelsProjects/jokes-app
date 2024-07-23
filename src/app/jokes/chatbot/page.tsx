@@ -1,3 +1,5 @@
+'use client'
+
 import { Box, Container, IconButton, TextField, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { FaRobot, FaUser } from 'react-icons/fa'

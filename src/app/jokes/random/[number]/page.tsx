@@ -1,12 +1,14 @@
+'use client'
+
 import { Box, Container, Typography } from '@mui/material'
-import { useRouter } from 'next/router'
+import { useSearchParams } from 'next/navigation'
 
 import { useGetRandomJokesQuery } from '@/store/slices/apiSlice'
 import { Joke } from '@/types/joke'
 
 export default function RandomJokesPage() {
-  const router = useRouter()
-  const { number } = router.query
+  const searchParams = useSearchParams()
+  const number = searchParams.get('number') || '1'
   const { data: jokes, error, isLoading } = useGetRandomJokesQuery(Number(number))
 
   return (

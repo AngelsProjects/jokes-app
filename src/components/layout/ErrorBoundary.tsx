@@ -1,3 +1,5 @@
+'use client'
+
 import { Box, Button, Typography } from '@mui/material'
 import { Component, ReactNode } from 'react'
 import { FaExclamationTriangle } from 'react-icons/fa'

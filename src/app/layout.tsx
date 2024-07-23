@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
+import '@/styles/globals.scss'
+
 import ErrorBoundary from '../components/layout/ErrorBoundary'
 import Navbar from '../components/layout/Navbar'
-import './globals.scss'
 
 const inter = Inter({ subsets: ['latin'] })
 

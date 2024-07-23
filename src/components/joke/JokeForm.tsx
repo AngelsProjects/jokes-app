@@ -1,3 +1,5 @@
+'use client'
+
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Box, Button, TextField } from '@mui/material'
 import { useEffect } from 'react'

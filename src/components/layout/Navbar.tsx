@@ -1,3 +1,5 @@
+'use client'
+
 import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material'
 import Link from 'next/link'
 import { FaHome, FaLaughBeam, FaPlus, FaRandom, FaRobot } from 'react-icons/fa'
