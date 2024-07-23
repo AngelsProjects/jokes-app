@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import { useAddJokeMutation, useEditJokeMutation, useGetJokesQuery } from '@/store/slices/apiSlice'
+import { JokeFormData, JokeFormProps } from '@/types/joke'
 
 const schema = yup.object().shape({
   type: yup.string().required(),
@@ -12,17 +13,19 @@ const schema = yup.object().shape({
   punchline: yup.string().required()
 })
 
-export default function JokeForm({ jokeId }) {
-  const { register, handleSubmit, reset, setValue } = useForm({
+export default function JokeForm({ jokeId }: JokeFormProps) {
+  const { register, handleSubmit, reset, setValue } = useForm<JokeFormData>({
     resolver: yupResolver(schema)
   })
 
-  const { data: jokes } = useGetJokesQuery()
+  const { data: jokes } = useGetJokesQuery(undefined, {
+    skip: !jokeId
+  })
 
   const [addJoke] = useAddJokeMutation()
   const [editJoke] = useEditJokeMutation()
 
-  const onSubmit = async data => {
+  const onSubmit = async (data: JokeFormData) => {
     if (jokeId) {
       await editJoke({ id: jokeId, ...data })
     } else {
@@ -34,7 +37,7 @@ export default function JokeForm({ jokeId }) {
 
   useEffect(() => {
     if (jokeId && jokes) {
-      const joke = jokes.find(j => j.id === parseInt(jokeId))
+      const joke = jokes.find((j: any) => j.id === parseInt(jokeId))
 
       if (joke) {
         setValue('type', joke.type)

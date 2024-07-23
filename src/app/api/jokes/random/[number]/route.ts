@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 import prisma from '@/lib/prisma'
+import { RandomParamsProps } from '@/types/api'
 
-export async function GET(req: NextRequest, { params }) {
+export async function GET(req: NextRequest, { params }: RandomParamsProps) {
   const { number } = params
   const count = await prisma.joke.count()
 

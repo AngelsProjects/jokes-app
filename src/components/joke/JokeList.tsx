@@ -1,11 +1,12 @@
-import { Delete, Edit } from '@mui/icons-material'
 import { Box, IconButton, List, ListItem, ListItemText } from '@mui/material'
 import Link from 'next/link'
+import PropTypes from 'prop-types'
 import { FaEdit, FaTrash } from 'react-icons/fa'
 
 import { useDeleteJokeMutation } from '@/store/slices/apiSlice'
+import { JokeListProps } from '@/types/joke'
 
-export default function JokeList({ jokes }) {
+export default function JokeList({ jokes }: JokeListProps) {
   const [deleteJoke] = useDeleteJokeMutation()
 
   return (
@@ -27,4 +28,14 @@ export default function JokeList({ jokes }) {
       ))}
     </List>
   )
+}
+
+JokeList.propTypes = {
+  jokes: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      setup: PropTypes.string.isRequired,
+      punchline: PropTypes.string.isRequired
+    })
+  ).isRequired
 }

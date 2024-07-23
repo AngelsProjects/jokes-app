@@ -1,33 +1,77 @@
-import { useState } from 'react'
+import { Box, Container, IconButton, TextField, Typography } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { FaRobot, FaUser } from 'react-icons/fa'
+import { MdSend } from 'react-icons/md'
+
+import { useLazyGetRandomJokeQuery } from '@/store/slices/apiSlice'
+
+interface Message {
+  text: string
+  isBot: boolean
+}
 
 export default function ChatbotPage() {
-  const [messages, setMessages] = useState([])
+  const [messages, setMessages] = useState<Message[]>([])
+  const [triggerGetRandomJoke, { data: joke, isSuccess }] = useLazyGetRandomJokeQuery()
 
-  const handleSendMessage = message => {
-    // Logic for sending a message to the chatbot
-    // Update the messages state with the bot response
+  const handleSendMessage = async (message: string) => {
+    if (!message.trim()) return
+
+    const userMessage: Message = { text: message, isBot: false }
+
+    setMessages(prevMessages => [...prevMessages, userMessage])
+
+    // Trigger the API call to get a random joke
+    triggerGetRandomJoke()
   }
 
+  useEffect(() => {
+    if (isSuccess && joke) {
+      const botMessage: Message = { text: `${joke.setup} - ${joke.punchline}`, isBot: true }
+
+      setMessages(prevMessages => [...prevMessages, botMessage])
+    }
+  }, [isSuccess, joke])
+
   return (
-    <div className='container mx-auto p-4'>
-      <h1 className='text-2xl font-bold'>Jokes Chatbot</h1>
-      <div className='chat-window'>
+    <Container maxWidth='md' className='p-4 sm:p-6 md:p-8'>
+      <Typography variant='h4' component='h1' className='text-center sm:text-left' gutterBottom>
+        Jokes Chatbot
+      </Typography>
+      <Box className='chat-window rounded bg-gray-100 p-4 shadow-md' sx={{ height: '60vh', overflowY: 'scroll' }}>
         {messages.map((msg, index) => (
-          <div key={index} className={`message ${msg.isBot ? 'bot' : 'user'}`}>
-            {msg.text}
-          </div>
+          <Box key={index} className={`message ${msg.isBot ? 'bot' : 'user'} mb-2 flex items-center`}>
+            {msg.isBot ? <FaRobot className='mr-2 text-blue-500' /> : <FaUser className='mr-2 text-green-500' />}
+            <Typography variant='body1' className={msg.isBot ? 'text-blue-700' : 'text-green-700'}>
+              {msg.text}
+            </Typography>
+          </Box>
         ))}
-      </div>
-      <input
-        type='text'
-        placeholder='Type a message'
-        onKeyDown={e => {
-          if (e.key === 'Enter') {
-            handleSendMessage(e.target.value)
-            e.target.value = ''
-          }
-        }}
-      />
-    </div>
+      </Box>
+      <Box className='mt-4 flex items-center'>
+        <TextField
+          variant='outlined'
+          fullWidth
+          placeholder='Type a message'
+          onKeyDown={e => {
+            if (e.key === 'Enter') {
+              handleSendMessage((e.target as HTMLInputElement).value)
+              ;(e.target as HTMLInputElement).value = ''
+            }
+          }}
+        />
+        <IconButton
+          color='primary'
+          onClick={() => {
+            const inputElement = document.querySelector('input[type="text"]') as HTMLInputElement
+
+            handleSendMessage(inputElement.value)
+            inputElement.value = ''
+          }}
+        >
+          <MdSend />
+        </IconButton>
+      </Box>
+    </Container>
   )
 }
