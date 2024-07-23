@@ -39,6 +39,7 @@ export const apiSlice = createApi({
 export const {
   useGetJokesQuery,
   useGetRandomJokeQuery,
+  useLazyGetRandomJokeQuery,
   useGetRandomJokesQuery,
   useAddJokeMutation,
   useEditJokeMutation,

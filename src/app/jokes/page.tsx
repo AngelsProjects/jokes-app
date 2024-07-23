@@ -5,7 +5,7 @@ import JokeList from '@/components/joke/JokeList'
 import { useGetJokesQuery } from '@/store/slices/apiSlice'
 
 export default function JokesPage() {
-  const { data: jokes, error, isLoading } = useGetJokesQuery()
+  const { data: jokes, error, isLoading } = useGetJokesQuery(undefined)
 
   return (
     <Container maxWidth='md' className='p-4 sm:p-6 md:p-8'>

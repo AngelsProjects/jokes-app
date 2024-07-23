@@ -2,11 +2,12 @@ import { Box, Container, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 
 import { useGetRandomJokesQuery } from '@/store/slices/apiSlice'
+import { Joke } from '@/types/joke'
 
 export default function RandomJokesPage() {
   const router = useRouter()
   const { number } = router.query
-  const { data: jokes, error, isLoading } = useGetRandomJokesQuery(number)
+  const { data: jokes, error, isLoading } = useGetRandomJokesQuery(Number(number))
 
   return (
     <Container maxWidth='md' className='p-4 sm:p-6 md:p-8'>
@@ -17,7 +18,7 @@ export default function RandomJokesPage() {
       {error && <p>Error loading jokes</p>}
       {jokes && (
         <Box>
-          {jokes.map(joke => (
+          {jokes.map((joke: Joke) => (
             <Box key={joke.id} mb={4}>
               <Typography variant='h6'>{joke.setup}</Typography>
               <Typography variant='body1'>{joke.punchline}</Typography>

@@ -3,7 +3,7 @@ import { Box, Container, Typography } from '@mui/material'
 import { useGetRandomJokeQuery } from '@/store/slices/apiSlice'
 
 export default function RandomJokePage() {
-  const { data: joke, error, isLoading } = useGetRandomJokeQuery()
+  const { data: joke, error, isLoading } = useGetRandomJokeQuery(undefined)
 
   return (
     <Container maxWidth='md' className='p-4 sm:p-6 md:p-8'>

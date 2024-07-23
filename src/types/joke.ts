@@ -8,7 +8,7 @@ export type JokeFormData = {
   punchline: string
 }
 
-type Joke = {
+export type Joke = {
   id: number
   setup: string
   punchline: string

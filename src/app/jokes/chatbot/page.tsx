@@ -4,11 +4,7 @@ import { FaRobot, FaUser } from 'react-icons/fa'
 import { MdSend } from 'react-icons/md'
 
 import { useLazyGetRandomJokeQuery } from '@/store/slices/apiSlice'
-
-interface Message {
-  text: string
-  isBot: boolean
-}
+import { Message } from '@/types/chatbot'
 
 export default function ChatbotPage() {
   const [messages, setMessages] = useState<Message[]>([])
@@ -22,14 +18,32 @@ export default function ChatbotPage() {
     setMessages(prevMessages => [...prevMessages, userMessage])
 
     // Trigger the API call to get a random joke
-    triggerGetRandomJoke()
+    triggerGetRandomJoke(undefined)
   }
 
   useEffect(() => {
     if (isSuccess && joke) {
-      const botMessage: Message = { text: `${joke.setup} - ${joke.punchline}`, isBot: true }
+      const fullBotMessage = `${joke.setup} - ${joke.punchline}`
+      let currentIndex = 0
+      const botMessage: Message = { text: '', isBot: true }
 
-      setMessages(prevMessages => [...prevMessages, botMessage])
+      const intervalId = setInterval(() => {
+        currentIndex++
+        botMessage.text = fullBotMessage.substring(0, currentIndex)
+        setMessages(prevMessages => {
+          const lastMessage = prevMessages[prevMessages.length - 1]
+
+          if (lastMessage && lastMessage.isBot) {
+            return [...prevMessages.slice(0, -1), botMessage]
+          }
+
+          return [...prevMessages, botMessage]
+        })
+
+        if (currentIndex === fullBotMessage.length) {
+          clearInterval(intervalId)
+        }
+      }, 10)
     }
   }, [isSuccess, joke])
 
