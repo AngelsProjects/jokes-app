@@ -1,11 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server'
-import prisma from '../../../../lib/prisma'
+import { NextResponse } from 'next/server'
+import prisma from '@/lib/prisma'
 
 export async function GET() {
-  const joke = await prisma.joke.findFirst({
-    orderBy: {
-      createdAt: 'desc',
-    },
+  const count = await prisma.joke.count()
+  const randomIndex = Math.floor(Math.random() * count)
+  const randomJoke = await prisma.joke.findMany({
+    skip: randomIndex,
+    take: 1,
   })
-  return NextResponse.json(joke)
+  return NextResponse.json(randomJoke[0])
 }

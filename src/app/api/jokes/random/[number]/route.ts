@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
-import prisma from '../../../../../lib/prisma'
+import prisma from '@/lib/prisma'
 
 export async function GET(req: NextRequest, { params }) {
   const { number } = params
-  const jokes = await prisma.joke.findMany({
-    take: Number(number),
-    orderBy: {
-      createdAt: 'desc',
-    },
-  })
-  return NextResponse.json(jokes)
+  const count = await prisma.joke.count()
+  const randomJokes = await prisma.$queryRaw`
+    SELECT * FROM "Joke"
+    ORDER BY RANDOM()
+    LIMIT ${Number(number)}
+  `
+  return NextResponse.json(randomJokes)
 }

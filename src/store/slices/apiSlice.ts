@@ -7,6 +7,9 @@ export const apiSlice = createApi({
     getJokes: builder.query({
       query: () => 'jokes',
     }),
+    getRandomJoke: builder.query({
+      query: () => 'jokes/random',
+    }),
     getRandomJokes: builder.query({
       query: (number) => `jokes/random/${number}`,
     }),
@@ -35,6 +38,7 @@ export const apiSlice = createApi({
 
 export const {
   useGetJokesQuery,
+  useGetRandomJokeQuery,
   useGetRandomJokesQuery,
   useAddJokeMutation,
   useEditJokeMutation,

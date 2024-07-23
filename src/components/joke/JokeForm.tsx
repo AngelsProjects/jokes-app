@@ -3,6 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { TextField, Button, Box } from '@mui/material'
 import { useAddJokeMutation, useEditJokeMutation, useGetJokesQuery } from '../../store/apiSlice'
+import { useEffect } from 'react'
 
 const schema = yup.object().shape({
   type: yup.string().required(),
