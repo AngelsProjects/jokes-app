@@ -1,0 +1,35 @@
+{
+  "extends": [
+    "config:base",
+    ":preserveSemverRanges",
+    ":semanticCommits",
+    ":enablePreCommit",
+    ":label(renovate)",
+    ":automergePatch",
+    ":automergeRequireAllStatusChecks"
+  ],
+  "packageRules": [
+    {
+      "matchDepTypes": ["devDependencies"],
+      "groupName": "devDependencies",
+      "schedule": ["at any time"]
+    },
+    {
+      "matchPackagePatterns": ["^eslint", "^prettier", "^stylelint", "^tailwindcss"],
+      "groupName": "linting-and-styling"
+    },
+    {
+      "matchPackagePatterns": ["^@types/"],
+      "groupName": "types-packages",
+      "schedule": ["weekly"]
+    },
+    {
+      "matchPackageNames": ["typescript"],
+      "groupName": "typescript",
+      "schedule": ["at any time"]
+    }
+  ],
+  "updateLockFiles": true,
+  "rangeStrategy": "auto",
+  "ignoreDeps": ["react", "react-dom"]
+}

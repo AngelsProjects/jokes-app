@@ -1,0 +1,16 @@
+version = 1
+exclude_patterns = ["node_modules/**", "dist/**"]
+
+[[analyzers]]
+name = "javascript"
+enabled = true
+paths = ["./"]
+
+  [analyzers.meta]
+  plugins = ["react"]
+  environment = [
+    "nodejs",
+    "cypress",
+    "mongo",
+    "jest"
+  ]

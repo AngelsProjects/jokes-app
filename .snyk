@@ -1,0 +1,12 @@
+# Snyk
+
+version: v1.15.0
+
+## monitoring policy - specify the branches or repositories you want to monitor
+
+monitor:
+  branches:
+    - master
+    - develop
+    - main
+    - dev

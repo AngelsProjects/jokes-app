@@ -1,0 +1,13 @@
+src/prisma/*
+**/dist
+**/build
+.pnpm-store
+**/coverage
+**/*.yml
+**/*.yaml
+**/*.md
+node_modules/
+public/
+bin/
+.next
+build/
