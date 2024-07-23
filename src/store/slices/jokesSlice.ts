@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface Joke {
   id: number
@@ -12,7 +12,7 @@ interface JokesState {
 }
 
 const initialState: JokesState = {
-  jokes: [],
+  jokes: []
 }
 
 const jokesSlice = createSlice({
@@ -30,11 +30,12 @@ const jokesSlice = createSlice({
     },
     updateJoke(state, action: PayloadAction<Joke>) {
       const index = state.jokes.findIndex(joke => joke.id === action.payload.id)
+
       if (index !== -1) {
         state.jokes[index] = action.payload
       }
-    },
-  },
+    }
+  }
 })
 
 export const { setJokes, addJoke, removeJoke, updateJoke } = jokesSlice.actions

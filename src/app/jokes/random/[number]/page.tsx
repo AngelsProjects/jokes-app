@@ -1,26 +1,30 @@
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import { Box, Container, Typography } from '@mui/material'
+import { useRouter } from 'next/router'
 
-export default function RandomJokesPage({ params }: { params: { number: string } }) {
-  const [jokes, setJokes] = useState([])
+import { useGetRandomJokesQuery } from '@/store/apiSlice'
 
-  useEffect(() => {
-    axios.get(`/api/jokes/random/${params.number}`).then((response) => {
-      setJokes(response.data)
-    })
-  }, [params.number])
+export default function RandomJokesPage() {
+  const router = useRouter()
+  const { number } = router.query
+  const { data: jokes, error, isLoading } = useGetRandomJokesQuery(number)
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold">Random Jokes</h1>
-      <ul>
-        {jokes.map((joke) => (
-          <li key={joke.id}>
-            <p>{joke.setup}</p>
-            <p>{joke.punchline}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Container maxWidth='md' className='p-4 sm:p-6 md:p-8'>
+      <Typography variant='h4' component='h1' className='text-center sm:text-left' gutterBottom>
+        Random Jokes
+      </Typography>
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Error loading jokes</p>}
+      {jokes && (
+        <Box>
+          {jokes.map(joke => (
+            <Box key={joke.id} mb={4}>
+              <Typography variant='h6'>{joke.setup}</Typography>
+              <Typography variant='body1'>{joke.punchline}</Typography>
+            </Box>
+          ))}
+        </Box>
+      )}
+    </Container>
   )
 }
