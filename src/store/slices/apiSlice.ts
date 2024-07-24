@@ -1,16 +1,18 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
+import { Joke } from '@/types/joke'
+
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
   endpoints: builder => ({
-    getJokes: builder.query({
+    getJokes: builder.query<Joke[], void>({
       query: () => 'jokes'
     }),
-    getRandomJoke: builder.query({
+    getRandomJoke: builder.query<Joke, void>({
       query: () => 'jokes/random'
     }),
-    getRandomJokes: builder.query({
+    getRandomJokes: builder.query<Joke[], number>({
       query: number => `jokes/random/${number}`
     }),
     addJoke: builder.mutation({

@@ -1,5 +1,8 @@
+'use client'
+
+import { keyframes } from '@emotion/react'
+import styled from '@emotion/styled'
 import { Box, Skeleton, Typography } from '@mui/material'
-import { keyframes, styled } from '@mui/system'
 import React from 'react'
 
 const shine = keyframes`

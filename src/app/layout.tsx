@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
+import CustomSnackbar from '@/components/layout/CustomSnackbar'
+import StoreProvider from '@/providers/StoreProvider'
+import ThemeProviderClient from '@/providers/ThemeProviderClient'
 import '@/styles/globals.scss'
 
 import ErrorBoundary from '../components/layout/ErrorBoundary'
@@ -20,10 +23,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
+      <head>
+        <link rel='icon' href='/images/favicon_32x32.png' />
+      </head>
       <body className={inter.className}>
         <ErrorBoundary>
-          <Navbar />
-          <main>{children}</main>
+          <ThemeProviderClient>
+            <StoreProvider>
+              <CustomSnackbar />
+              <Navbar />
+              <main>{children}</main>
+            </StoreProvider>
+          </ThemeProviderClient>
         </ErrorBoundary>
       </body>
     </html>

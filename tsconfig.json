@@ -27,7 +27,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/global.d.ts",
-    "node_modules/@prisma/client"
+    "node_modules/@prisma/client",
+    "prisma/seed.ts"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,6 +1,7 @@
 'use client'
 
 import { Box, Button, Typography } from '@mui/material'
+import Image from 'next/image'
 import { Component, ReactNode } from 'react'
 import { FaExclamationTriangle } from 'react-icons/fa'
 
@@ -42,6 +43,15 @@ class ErrorBoundary extends Component<Props, State> {
           <Typography variant='h4' component='h1' className='mb-4'>
             Something went wrong.
           </Typography>
+
+          <Image
+            src='/images/wrong.webp'
+            alt='Wrong Answer'
+            className='mb-4 h-64 w-full object-contain'
+            width={64}
+            height={64}
+          />
+
           <Button variant='contained' color='primary' onClick={() => window.location.reload()}>
             Reload Page
           </Button>

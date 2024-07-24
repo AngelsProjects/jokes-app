@@ -6,8 +6,10 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
+import { useAppDispatch } from '@/store/hooks'
 import { useAddJokeMutation, useEditJokeMutation, useGetJokesQuery } from '@/store/slices/apiSlice'
-import { JokeFormData, JokeFormProps } from '@/types/joke'
+import { showSnackbar } from '@/store/slices/snackbarSlice'
+import { Joke, JokeFormData, JokeFormProps } from '@/types/joke'
 
 const schema = yup.object().shape({
   type: yup.string().required(),
@@ -16,6 +18,8 @@ const schema = yup.object().shape({
 })
 
 export default function JokeForm({ jokeId }: JokeFormProps) {
+  const dispatch = useAppDispatch()
+
   const { register, handleSubmit, reset, setValue } = useForm<JokeFormData>({
     resolver: yupResolver(schema)
   })
@@ -28,18 +32,22 @@ export default function JokeForm({ jokeId }: JokeFormProps) {
   const [editJoke] = useEditJokeMutation()
 
   const onSubmit = async (data: JokeFormData) => {
+    let snackMessage = { message: 'Joke added successfully!', severity: 'success' } as any
+
     if (jokeId) {
       await editJoke({ id: jokeId, ...data })
+      snackMessage = { message: 'Joke updated successfully!', severity: 'success' } as any
     } else {
       await addJoke(data)
     }
 
+    dispatch(showSnackbar(snackMessage))
     reset()
   }
 
   useEffect(() => {
     if (jokeId && jokes) {
-      const joke = jokes.find((j: any) => j.id === parseInt(jokeId))
+      const joke = jokes.find((j: Joke) => j.id === parseInt(jokeId))
 
       if (joke) {
         setValue('type', joke.type)
